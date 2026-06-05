@@ -14,7 +14,7 @@ if(name === "" || password ==="") {
     alert("من فضلك ادخل الاسم وكلمه السر");
 } else {
     localStorage.setItem("vibeuser",username);
-    window.location.href = "page.html";
+    window.location.href = "index.html";
 }
 
 });
