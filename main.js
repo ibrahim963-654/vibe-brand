@@ -185,6 +185,7 @@ cart.onclick = function() {
 let li = document.querySelectorAll("li");
 
 
+
 li.forEach(e => {
 
     e.onclick = function() {
