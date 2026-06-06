@@ -65,7 +65,11 @@ body {
     transition: color 0.3s ease;
 }
 
-.links li a:hover, .links li a.active {
+li.active a {
+    color: var(--bright-green);
+}
+
+.links li a:hover{
     color: var(--bright-green);
 }
 
@@ -740,5 +744,4 @@ body {
         font-size: 24px;
         padding: 15px 35px;
     }
-
-    .shose img, .t
+}
