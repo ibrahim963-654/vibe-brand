@@ -7,6 +7,7 @@ if (localStorage.getItem("vibeuser")) {
     };
 }
 
+// مصفوفة المنتجات
 const products = [
     { id: 1, name: "حذاء كاجوال ابيض", price: 1200, category: "shose", image: "images (1).jpg" },
     { id: 2, name: "حذاء جري سبورت", price: 1450, category: "shose", image: "images (2).jpg" },
@@ -38,7 +39,7 @@ const products = [
     { id: 68, name: "بنطلون قماش زيتي كاجوال", price: 540, category: "pants", image: "images (68).jpg" },
     { id: 10, name: "حذاء كاجوال زيتي", price: 990, category: "shose", image: "images (10).jpg" },
     { id: 41, name: "تيشرت أحمر غامق سادة", price: 330, category: "t-shirt", image: "images (41).jpg" },
-    { id: 69, name: "بنطلون جرو رمادي سبورت", price: 480, price: 480, category: "pants", image: "images (69).jpg" },
+    { id: 69, name: "بنطلون جرو رمادي سبورت", price: 480, category: "pants", image: "images (69).jpg" },
     { id: 11, name: "سنيكرز بيج هادي", price: 1150, category: "shose", image: "images (11).jpg" },
     { id: 42, name: "تيشرت أسود جرافيك فخم", price: 410, category: "t-shirt", image: "images (42).jpg" },
     { id: 70, name: "بنطلون كارغو بيج عصري", price: 750, category: "pants", image: "images (70).jpg" }
@@ -50,8 +51,9 @@ let tshirt = document.getElementById("tshirt");
 let pants = document.getElementById("pants");
 let add = document.getElementById("add");
 
+// دالة عرض المنتجات
 function showitem(categoryname) {
-    if (!add) return; // حماية في حال لم يكن العنصر موجوداً بالصفحة
+    if (!add) return; 
     add.innerHTML = "";
 
     for(let i = 0; i < products.length; i++) {
@@ -107,22 +109,33 @@ function showitem(categoryname) {
     }
 }
 
-// تشغيل الفلترة عند الضغط مع تغيير حالة الـ Active بدون تضارب
-if(shose)  shose.onclick = function() { changeActive(this); showitem("shose"); }
-if(tshirt) tshirt.onclick = function() { changeActive(this); showitem("t-shirt"); }
-if(pants)  pants.onclick = function() { changeActive(this); showitem("pants"); }
-if(all)    all.onclick = function() { changeActive(this); showitem("all"); }
-
-// دالة مخصصة لتغيير كلاس Active للأزرار فقط منعاً للتضارب
-function changeActive(element) {
-    let li = document.querySelectorAll("li");
-    li.forEach(el => el.classList.remove("active"));
-    element.classList.add("active");
+// دالة التحكم في كلاس active لأزرار الفلترة فقط لمنع التداخل مع الـ navbar
+function filterActive(clickedElement) {
+    // نبحث عن العنصر الأب المشترك للأزرار وهو الـ .select
+    let filterButtons = document.querySelectorAll(".select div");
+    filterButtons.forEach(btn => btn.classList.remove("active"));
+    
+    // إضافة الكلاس للعنصر الحاضن (الـ div) الخاص بالزر المضغوط
+    clickedElement.parentElement.classList.add("active");
 }
 
-// تشغيل عرض كل المنتجات تلقائياً عند فتح الصفحة لأول مرة
+// ربط الأزرار بالوظائف وحل مشكلة الضغط على الـ div
+if(shose) shose.onclick = function() { filterActive(this); showitem("shose"); }
+if(tshirt) tshirt.onclick = function() { filterActive(this); showitem("t-shirt"); }
+if(pants) pants.onclick = function() { filterActive(this); showitem("pants"); }
+if(all) {
+    all.onclick = function() { 
+        let filterButtons = document.querySelectorAll(".select div");
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        this.parentElement.classList.add("active");
+        showitem("all"); 
+    }
+}
+
+// عرض المنتجات تلقائياً عند فتح الصفحة لأول مرة
 showitem("all");
 
+// كود السلة
 let cartBtn = document.querySelector(".cart");
 if(cartBtn) {
     cartBtn.onclick = function() {
@@ -133,3 +146,12 @@ if(cartBtn) {
         }
     }
 }
+
+// كود التحكم في الـ active الخاص بشريط التنقل (Navbar) فقط
+let navLinks = document.querySelectorAll(".links li");
+navLinks.forEach(e => {
+    e.onclick = function() {
+        navLinks.forEach(el => el.classList.remove("active"));
+        e.classList.add("active");
+    }
+});
