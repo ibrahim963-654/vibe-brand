@@ -181,3 +181,22 @@ cart.onclick = function() {
         window.location.href = "login.html"
     }
 }
+
+let li = document.querySelectorAll("li");
+
+
+
+li.forEach(e => {
+
+    e.onclick = function() {
+
+        li.forEach(el => {
+
+            el.classList.remove("active");
+
+        })
+
+        e.classList.add("active");
+
+
+    }
