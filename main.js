@@ -185,7 +185,6 @@ cart.onclick = function() {
 let li = document.querySelectorAll("li");
 
 
-
 li.forEach(e => {
 
     e.onclick = function() {
@@ -198,5 +197,5 @@ li.forEach(e => {
 
         e.classList.add("active");
 
-
-    }
+ }
+});
